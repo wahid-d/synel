@@ -1,0 +1,154 @@
+@using mvc.Models
+
+@model EmployeeDto
+<!-- Edit Employee Modal -->
+<div class="modal fade" id="edit-employee-modal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="staticBackdropLabel">Edit Employee Details</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+
+            <form method="post" asp-action="Edit">
+                <div class="modal-body">
+                    <div class="accordion accordion-flush" id="edit-employee-accordion">
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-personal">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#personal" aria-expanded="true" aria-controls="personal">
+                                    Personal
+                                </button>
+                            </h2>
+                            <div id="personal" class="accordion-collapse collapse" aria-labelledby="heading-personal" data-bs-parent="#edit-employee-accordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Forename" type="text" class="form-control ml-3" id="edit-forename" placeholder="Forename" required>
+                                                <label for="edit-forename" class="form-label">Forename</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Surname" type="text" class="form-control" id="edit-surname" placeholder="Surname" required>
+                                                <label for="edit-surname" class="form-label">Surname</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Birthdate" type="text" class="form-control edit-datetime" id="edit-birthdate" placeholder="12/3/2020">
+                                                <label for="edit-birhtdate" class="form-label">Birthdate</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-contact">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#contact" aria-expanded="true" aria-controls="contact">
+                                    Contact
+                                </button>
+                            </h2>
+                            <div id="contact" class="accordion-collapse collapse" aria-labelledby="heading-contact" data-bs-parent="#edit-employee-accordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Phone" oninput="this.value = this.value.replace( /[^\d]+/g, '')" type="tel" class="form-control ml-3" id="edit-phone" placeholder="Phone">
+                                                <label for="edit-phone" class="form-label">Phone</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Mobile" oninput="this.value = this.value.replace( /[^\d]+/g, '')" type="tel" class="form-control" id="edit-mobile" placeholder="Mobile">
+                                                <label for="edit-mobile" class="form-label">Mobile</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-12">
+                                            <div class="form-floating mb-3">
+                                                <input readonly required asp-for="HomeEmail" type="text" class="form-control" id="edit-email" placeholder="Email">
+                                                <label for="edit-email" class="form-label">Email</label>
+                                                <small id="email-disabled-warning" class="form-text text-muted">Email field is unique and cannot be changed.</small>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-address">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#address" aria-expanded="true" aria-controls="address">
+                                    Address
+                                </button>
+                            </h2>
+                            <div id="address" class="accordion-collapse collapse" aria-labelledby="heading-address" data-bs-parent="#edit-employee-accordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-sm-12">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Address" type="text" class="form-control ml-3" id="edit-address" placeholder="Address">
+                                                <label for="edit-address" class="form-label">Address</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Address2" type="text" class="form-control ml-3" id="edit-address2" placeholder="Address 2">
+                                                <label for="edit-address2" class="form-label">Address 2</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="Postcode" type="text" class="form-control ml-3" id="edit-postal" placeholder="Postal Code">
+                                                <label for="edit-postal" class="form-label">Postal Code</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
+                        <div class="accordion-item">
+                            <h2 class="accordion-header" id="heading-company">
+                                <button class="accordion-button" type="button" data-bs-toggle="collapse" data-bs-target="#company" aria-expanded="true" aria-controls="company">
+                                    Company related
+                                </button>
+                            </h2>
+                            <div id="company" class="accordion-collapse collapse" aria-labelledby="heading-company" data-bs-parent="#edit-employee-accordion">
+                                <div class="accordion-body">
+                                    <div class="row">
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="StartDate" type="text" class="form-control edit-datetime" id="edit-startdate" placeholder="12/3/2020">
+                                                <label for="edit-startdate" class="form-label">Start Date</label>
+                                            </div>
+                                        </div>
+
+                                        <div class="col-sm-6">
+                                            <div class="form-floating mb-3">
+                                                <input required asp-for="PayrollNumber" type="text" class="form-control ml-3" id="edit-payroll" placeholder="Payroll">
+                                                <label for="edit-payroll" class="form-label">Payroll</label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+                    <button type="submit" class="btn btn-primary">Save</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,95 @@
+﻿@using mvc.Models
+
+@model EmployeesViewModel
+
+@{ ViewData["Title"] = "Synel Integration Page"; }
+
+@await Html.PartialAsync("_EditEmployeePartial", new EmployeeDto())    
+
+<form method="post" enctype="multipart/form-data" class="mb-5" asp-action="Import">
+    <div class="row">
+        <div class="col-sm-10">
+            <label for="file-browser" class="form-label">Load employees from *.csv file.</label>
+            <input asp-for="EmployeesFile" class="form-control form-control" id="file-browser" type="file" accept=".csv" required>
+        </div>
+        <button type="submit" class="btn btn-primary col-sm-2 mt-auto">Upload</button>
+    </div>
+</form>
+
+@if ((Model.HasError || !Model.Employees.Any()))
+{
+    <div class="row">
+        @if (string.IsNullOrWhiteSpace(Model.Message))
+        {
+            <div class="alert alert-danger" role="alert">
+                Some unknow error occured. Try refreshing the page (▰︶︹︺▰).
+            </div> 
+        }
+        else
+        {
+            <div class="alert alert-danger col-sm-10" role="alert">
+                @Model.Message
+            </div>
+        }
+    </div>
+}
+else
+{
+    @await Html.PartialAsync("_PaginationPartial", new PaginationViewModel(Model.TotalPages, Model.CurrentPage))
+
+    <table data-display-length='-1' id="my-table" class="display" style="width:100%">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Payroll</th>
+                <th>Birthdate</th>
+                <th>Phone</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Postcode</th>
+                <th>Email</th>
+                <th>Start Date</th>
+            </tr>
+        </thead>
+        <tbody>
+            @foreach (var employee in Model.Employees)
+            {
+                <tr>
+                    <td>@string.Format($"{employee.Forename} {employee.Surname}")</td>
+                    <td>@employee.PayrollNumber</td>
+                    <td>@employee.Birthdate.ToString("dd MMM, yyyy")</td>
+                    <td>@employee.Phone</td>
+                    <td>@employee.Mobile</td>
+                    <td>
+                        <div class="col">
+                            <div class="row" id="employee-address">
+                                @employee.Address
+                            </div>
+                            <div class="row" id="employee-address2">
+                                @employee.Address2
+                            </div>
+                        </div>
+                    </td>
+                    <td>@employee.Postcode</td>
+                    <td>@employee.HomeEmail</td>
+                    <td>@employee.StartDate.ToString("dd MMM, yyyy")</td>
+                </tr>
+            }
+        </tbody>
+        <tfoot>
+            <tr>
+                <th>Name</th>
+                <th>Payroll</th>
+                <th>Birthdate</th>
+                <th>Phone</th>
+                <th>Mobile</th>
+                <th>Address</th>
+                <th>Postcode</th>
+                <th>Email</th>
+                <th>Start Date</th>
+            </tr>
+     
+        </tfoot>
+    </table>
+    @await Html.PartialAsync("_PaginationPartial", new PaginationViewModel(Model.TotalPages, Model.CurrentPage))    
+}

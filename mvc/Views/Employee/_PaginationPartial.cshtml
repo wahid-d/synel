@@ -1,0 +1,24 @@
+@using mvc.Models
+
+@model PaginationViewModel
+@{
+
+    string nextEnabled = Model.CurrentPage < Model.TotalPages ? "d-block" : "d-none";
+    string prevEnabled = Model.CurrentPage > 1 ? "d-block" : "d-none";
+
+    <div class="pagination">
+        <a asp-action="index"
+           asp-route-page="@(Model.CurrentPage - 1)"
+           class="@prevEnabled">&laquo;</a>
+        @for (int _page = 1; _page <= Model.TotalPages; _page++)
+        {
+            var isActive = _page == Model.CurrentPage ? "active" : string.Empty;
+            <a class="@isActive"
+               asp-action="index"
+               asp-route-page="@_page">@_page</a>
+        }
+        <a asp-action="index"
+           asp-route-page="@(Model.CurrentPage + 1)"
+           class="@nextEnabled">&raquo;</a>
+    </div>
+}
